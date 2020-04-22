@@ -4,28 +4,30 @@ HEIGHT = 750
 WIDTH = 1500
 
 root = tk.Tk()
+root.state('zoomed')
+#canvas = tk.Canvas(root, bg='black')
+#canvas.pack(fill='both', expand=True)
 
-canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH, bg='black')
-canvas.pack()
+def initialize_frames():
+    menuFrame = tk.Frame(root, bg='red')
+    menuFrame.place(relwidth=0.25, relheight=0.25)
 
-"""
-searchFrame = tk.Frame(canvas, bg='red')
-searchFrame.grid(row=0, column=0)
+    memberFrame = tk.Frame(root, bg='yellow')
+    memberFrame.place(relx=0.25, relwidth=0.5, relheight=0.25)
 
-button = tk.Button(searchFrame, text="test")
-button.place(width=10, height=10)
+    tabFrame = tk.Frame(root, bg='green')
+    tabFrame.place(rely=0.25, relheight=0.1, relwidth=0.75)
 
-loginFrame = tk.Frame(canvas, bg='green')
-loginFrame.grid(row=0, column=1)
+    orderFrame = tk.Frame(root, bg='black')
+    orderFrame.place(relx=0.75, relwidth=0.25, relheight=0.85)
 
-manualFrame = tk.Frame(canvas, bg='yellow')
-manualFrame.grid(row=0, column=2)
+    buttonFrame = tk.Frame(root, bg='blue')
+    buttonFrame.place(rely=0.35, relwidth=0.75, relheight=0.65)
 
-memberFrame = tk.Frame(canvas, bg='black')
-memberFrame.grid(row=0, column=3, rowspan=2)
-"""
+    totalFrame = tk.Frame(root, bg='pink')
+    totalFrame.place(relx=0.75, rely=0.85, relwidth=0.25, relheight=0.15)
 
-buttonFrame = tk.Frame(root, bg='blue')
-buttonFrame.place(rely=0.25, relwidth=0.7, relheight=0.75)
+initialize_frames()
+
 
 root.mainloop()
