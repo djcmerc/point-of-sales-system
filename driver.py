@@ -8,7 +8,6 @@ from frames import MainGUI
 root = tk.Tk()
 root.state('zoomed')
 mainGUI = MainGUI(root)
-#guiFont = font.Font(family='Helvetica', size=36)
 #canvas = tk.Canvas(root, bg='black')
 #canvas.pack(fill='both', expand=True)
 
