@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.font as font
 
+# Global functions used to create different elements of the UI
 def createButton(master, text, font, w, h, x, y=0, fx = None, id = None, bd=5):
     button = tk.Button(master, text=text, font=font, command=lambda:fx(id), bd=bd)
     button.place(relwidth=w,relheight=h,relx=x,rely=y)
@@ -36,9 +37,10 @@ class ButtonFrame():
             updateTotal(getTotal)
         self.guiFont = font.Font(family='Helvetica', size=18)
         self.frame = createFrame(master=master, bg='blue', highlightbackground='black', highlightthickness=8, y=0.35, w=0.75, h=0.65)
+
         self.buttons = createButtonList(master=self.frame, font=self.guiFont, menu=menu, command=buttonClick)
 
-
+# MainGUI class which encompasses all other elements in the GUI
 class MainGUI:
     def __init__(self, master):
         self.master = master
@@ -56,8 +58,10 @@ class MemberFrame:
         self.buttonFont = font.Font(family='Helvetica', size=18)
         self.labelFont = font.Font(family='Helvetica', size=12)
         self.frame = createFrame(master, bg='yellow', highlightbackground='black', highlightthickness=8,x=0.25, w=0.5, h=0.25)
+
         self.convertButton = createButton(self.frame, text="Convert Points", font=self.buttonFont, w=0.5, h=0.2, x=0, y=0.8)
         self.infoButton = createButton(self.frame, text="Additional Information", font=self.buttonFont, w=0.5, h=0.2, x=0.5, y=0.8)
+
         self.nameLabel = createLabel(self.frame, text="Member Name: ", font=self.labelFont, w=1, h=0.2, y=0)
         self.tierLabel = createLabel(self.frame, text="Membership Tier: ", font=self.labelFont, w=1, h=0.2, y=0.2)
         self.ptsLabel = createLabel(self.frame, text="Points: ", font=self.labelFont, w=1, h=0.2, y=0.4)
@@ -66,12 +70,15 @@ class MemberFrame:
 class MenuFrame:
     def __init__(self, master):
         self.frame = createFrame(master, bg='red', highlightbackground='black', highlightthickness=8, w=0.25, h=0.25)
+
         self.loginLabel = createLabel(self.frame, text="User: ", font=font.Font(family='Helvetica', size=12), w=1, h=0.2, y=0)
+
         self.menuButton = createButton(self.frame, text="Menu", font=font.Font(family='Helvetica', size=16), w=0.5, h=0.2, x=0.25, y=0.55)
 
 class OrderFrame:
     def __init__(self, master):
         self.frame = createFrame(master, highlightbackground='black', highlightthickness=8,x=0.75, w=0.25, h=0.85)
+
         self.orderListbox = tk.Listbox(self.frame)
         self.orderListbox.place(relwidth=1, relheight=0.9)
 
@@ -108,6 +115,7 @@ class TabFrame:
         self.tabNames = ["Main", "Candy/Ice Cream", "Hot Food"]
         self.guiFont = font.Font(family='Helvetica', size=18)
         self.frame = createFrame(master, bg='#99ffff', highlightbackground='black', highlightthickness=8,y=0.25, h=0.1, w=0.75)
+
         self.mainTab = createButton(self.frame, self.tabNames[0], self.guiFont, w=(1/3), h=1, x=0)
         self.candyTab = createButton(self.frame, self.tabNames[1], self.guiFont, w=(1/3), h=1, x=(1/3))
         self.hotFoodTab = createButton(self.frame, self.tabNames[2], self.guiFont, w=(1/3), h=1, x=(2/3))
@@ -120,4 +128,5 @@ class TotalFrame:
         self.totalButton = createButton(self.frame, "Total: $0.00", self.guiFont, 1, 1, 0)
 
     def updateTotal(self, getTotal):
-        self.totalButton.config(text="Total: $" + str(getTotal()))
+        #self.totalButton.config(text="Total: $" + str(getTotal()))
+        self.totalButton.config(text="Total: ${0:.2f}".format(getTotal()))
