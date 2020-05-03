@@ -31,10 +31,12 @@ def createLabel(master, text, font, w, h, y):
     return label
 
 class ButtonFrame():
-    def __init__(self, master, menu, addToOrder, updateTotal, getTotal):
+    def __init__(self, master, menu, listbox, addToOrder, updateTotal, getTotal):
+        
         def buttonClick(id):
-            addToOrder(list(menu.keys())[id])
+            addToOrder(list(menu.keys())[id], listbox)
             updateTotal(getTotal)
+
         self.guiFont = font.Font(family='Helvetica', size=18)
         self.frame = createFrame(master=master, bg='blue', highlightbackground='black', highlightthickness=8, y=0.35, w=0.75, h=0.65)
 
@@ -47,11 +49,12 @@ class MainGUI:
         self.orderHandler = OrderHandler()
         self.menuFrame = MenuFrame(master)
         self.tabFrame = TabFrame(master)
+        self.totalFrame = TotalFrame(master)
+        self.memberFrame = MemberFrame(master)
         self.orderFrame = OrderFrame(master)
         self.orderButtonsFrame = OrderButtonsFrame(self.orderFrame.frame)
-        self.totalFrame = TotalFrame(master)
-        self.buttonFrame = ButtonFrame(master, self.orderHandler.menu, self.orderHandler.addToOrder, self.totalFrame.updateTotal, self.orderHandler.getTotal)
-        self.memberFrame = MemberFrame(master)
+        self.buttonFrame = ButtonFrame(master, self.orderHandler.menu, self.orderFrame.orderListbox, self.orderHandler.addToOrder, self.totalFrame.updateTotal, 
+            self.orderHandler.getTotal)
 
 class MemberFrame:
     def __init__(self, master):
@@ -78,8 +81,9 @@ class MenuFrame:
 class OrderFrame:
     def __init__(self, master):
         self.frame = createFrame(master, highlightbackground='black', highlightthickness=8,x=0.75, w=0.25, h=0.85)
+        self.guiFont = font.Font(family='Helvetica', size=18)
 
-        self.orderListbox = tk.Listbox(self.frame)
+        self.orderListbox = tk.Listbox(self.frame, font=self.guiFont)
         self.orderListbox.place(relwidth=1, relheight=0.9)
 
 class OrderButtonsFrame:
@@ -100,9 +104,16 @@ class OrderHandler:
         self.order = {}
         self.total = 0
 
-    def addToOrder(self, item):
-        if item in self.order: self.order[item] += 1
-        else: self.order[item] = 1
+    def addToOrder(self, item, listbox):
+        if item in self.order: 
+            self.order[item] += 1
+            listbox.delete(0, "end")
+            for item in self.order:
+                listbox.insert("end", "{0} ({1}) - ${2:.2f}".format(item, self.order[item], self.order[item] * self.menu[item]))
+        else: 
+            self.order[item] = 1
+            listbox.insert("end", "{0} ({1}) - ${2:.2f}".format(item, self.order[item], self.order[item] * self.menu[item]))
+            
 
         self.total += self.menu[item]
         print(self.order, self.total)
@@ -128,5 +139,4 @@ class TotalFrame:
         self.totalButton = createButton(self.frame, "Total: $0.00", self.guiFont, 1, 1, 0)
 
     def updateTotal(self, getTotal):
-        #self.totalButton.config(text="Total: $" + str(getTotal()))
         self.totalButton.config(text="Total: ${0:.2f}".format(getTotal()))
