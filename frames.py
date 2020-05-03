@@ -52,7 +52,6 @@ class MainGUI:
         self.totalFrame = TotalFrame(master)
         self.memberFrame = MemberFrame(master)
         self.orderFrame = OrderFrame(master)
-        self.orderButtonsFrame = OrderButtonsFrame(self.orderFrame.frame)
         self.buttonFrame = ButtonFrame(master, self.orderHandler.menu, self.orderFrame.orderListbox, self.orderHandler.addToOrder, self.totalFrame.updateTotal, 
             self.orderHandler.getTotal)
 
@@ -81,22 +80,17 @@ class MenuFrame:
 class OrderFrame:
     def __init__(self, master):
         self.frame = createFrame(master, highlightbackground='black', highlightthickness=8,x=0.75, w=0.25, h=0.85)
-        self.guiFont = font.Font(family='Helvetica', size=18)
+        self.orderFont = font.Font(family='Helvetica', size=18)
+        self.buttonFont = font.Font(family='Helvetica', size=36)
 
-        self.orderListbox = tk.Listbox(self.frame, font=self.guiFont)
+        self.orderListbox = tk.Listbox(self.frame, font=self.orderFont)
         self.orderListbox.place(relwidth=1, relheight=0.9)
 
-class OrderButtonsFrame:
-    def __init__(self, master):
-        self.guiFont = font.Font(family='Helvetica', size=36)
+        self.upButton = createButton(self.frame, "UP", self.buttonFont, (1/3), 0.1, 0, 0.9)
 
-        self.frame = createFrame(master, bg='pink',y=0.9, w=1, h=0.1)
+        self.deleteButton = createButton(self.frame, "DEL", self.buttonFont, (1/3), 0.1, (1/3), 0.9)
 
-        self.upButton = createButton(self.frame, "UP", self.guiFont, (1/3), 1, 0)
-
-        self.deleteButton = createButton(self.frame, "DEL", self.guiFont, (1/3), 1, (1/3))
-
-        self.downButton = createButton(self.frame, "DOWN", self.guiFont, (1/3), 1, (2/3))
+        self.downButton = createButton(self.frame, "DOWN", self.buttonFont, (1/3), 0.1, (2/3), 0.9)
 
 class OrderHandler:
     def __init__(self):

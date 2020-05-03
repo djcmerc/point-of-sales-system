@@ -6,8 +6,10 @@ from frames import MainGUI
 #WIDTH = 1500
 
 root = tk.Tk()
+root.title("Point of Sales")
 root.state('zoomed')
 mainGUI = MainGUI(root)
+
 #canvas = tk.Canvas(root, bg='black')
 #canvas.pack(fill='both', expand=True)
 
